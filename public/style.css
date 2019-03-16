@@ -1,0 +1,12 @@
+
+.u-hidden {
+	display: none;
+}
+
+.dropzone {
+	display: block;
+	border: 1px solid red;
+	width: 100%;
+	height: 500px;
+	box-sizing: border-box;
+}
