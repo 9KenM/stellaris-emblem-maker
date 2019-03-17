@@ -1,4 +1,6 @@
 
+let dropListeners = []
+
 function initDropzone() {
 	const dz = document.getElementById('dropzone')
 
@@ -67,9 +69,19 @@ function getDataTransfer(e) {
 }
 
 function processFiles(files) {
-	console.log(files)
+	dropListeners.forEach(fn => fn(files))
 }
 
-document.addEventListener('DOMContentLoaded', e => {
-	initDropzone()
-})
+function addDropListener(fn) {
+	dropListeners.push(fn)
+}
+
+function removeDropListener(fn) {
+	dropListeners.splice(dropListeners.indexOf(fn), 1)
+}
+
+export default {
+	init: initDropzone,
+	onDrop: addDropListener,
+	removeOnDrop: removeDropListener
+}
