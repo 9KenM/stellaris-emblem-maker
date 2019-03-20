@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="font-awesome/all.css">
 		<link rel="stylesheet" href="style.css">
 		<script type="module" src="maker.js"></script>
 	</head>
@@ -12,14 +13,15 @@
 
 		<label id="dropzone" class="dropzone">
 			<input type="file" class="act-file-input u-hidden" multiple>
+
+			<div id="thumbnails" class="thumbnails">
+			</div>
+
+			<div class="status-bar">
+				<button class="act-download-zip"></button>
+			</div>
+
 		</label>
-
-		<div class="status-bar">
-			<button class="act-download-zip"></button>
-		</div>
-
-		<div id="thumbnails" class="thumbnails">
-		</div>
 
 		<footer class="site-footer">
 		</footer>
