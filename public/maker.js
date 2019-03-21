@@ -1,6 +1,6 @@
-import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js'
 import Drop from './drop.js'
 import Display from './display.js'
+import Textures from './textures.js'
 
 function readFileData(file) {
 	return new Promise(resolve => {
@@ -15,6 +15,17 @@ function readFileData(file) {
 document.addEventListener('DOMContentLoaded', e => {
 	Drop.init()
 	Drop.onDrop(files => {
-		Display.fill(Array.from(files))
+		Display.loadStart()
+		Textures.genTextures(files).then(jobs => {
+			Display.clear()
+			jobs.forEach(job => {
+				job.then(res => {
+					Display.append(res.outputFiles[0].blob)
+				})
+			})
+			Promise.all(jobs).then(res => {
+				Display.loadEnd()
+			})
+		})
 	})
 })

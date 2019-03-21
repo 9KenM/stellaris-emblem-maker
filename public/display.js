@@ -29,6 +29,22 @@ function emptyContainer() {
 	container.querySelectorAll('img').forEach(img => removeImg(img))
 }
 
+function append(img) {
+	appendImageData(getContainer(), img)
+}
+
+function loadStart() {
+	document.getElementById('dropzone').classList.add('loading')
+}
+
+function loadEnd() {
+	document.getElementById('dropzone').classList.remove('loading')
+}
+
 export default {
-	fill: fillContainer
+	clear: emptyContainer,
+	fill: fillContainer,
+	append: append,
+	loadStart: loadStart,
+	loadEnd: loadEnd
 }

@@ -23,7 +23,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: rgba(155,155,155,1);
+	color: rgba(200,200,200,0.25);
 	border: 3px dashed;
 	border-radius: 20px;
 	width: calc(100vw - 60px);
@@ -38,7 +38,7 @@ body {
 
 .dropzone.is_dragged-over {
 	background-color: rgba(0,0,0,0.1);
-	color: rgba(33,33,33,1);
+	color: rgba(33,33,33,0.25);
 }
 
 .dropzone::before {
@@ -48,6 +48,11 @@ body {
 	font-size: 200px;
 	position: absolute;
 	z-index: -1;
+}
+
+.dropzone.loading::before {
+	content: '\f013';
+	animation: fa-spin 2s infinite linear;
 }
 
 .thumbnails {
