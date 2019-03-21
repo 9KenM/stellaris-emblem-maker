@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', e => {
 			Display.clear()
 			jobs.forEach(job => {
 				job.then(res => {
-					Display.append(res.outputFiles[0].blob)
+					res.forEach(image => {
+						Display.append(image.blob)
+					})
 				})
 			})
 			Promise.all(jobs).then(res => {

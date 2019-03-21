@@ -80,18 +80,52 @@ function genDefault(img, border) {
 	})
 }
 
+function genMap(img) {
+	let name = img.name.split('.').slice(0, -1).join('.').split('_').slice(0, -1).join('_')
+	return Magick.execute({
+		inputFiles: [img],
+		commands: `
+			convert ${img.name} -alpha copy \
+			-resize 256x256 \
+			${name}_map.png
+		`
+	})
+}
+
+function genSmall(img, border) {
+	let name = img.name.split('.').slice(0, -1).join('.').split('_').slice(0, -1).join('_')
+	return Magick.execute({
+		inputFiles: [img, border],
+		commands: `
+			convert ${img.name} \
+			-fill black -colorize 100%% -channel RGBA -blur 32x32 -level 0,97%% \
+			${img.name} -compose Over -composite \
+			${border.name} -compose Dst_Over -composite \
+			-colorspace RGB -resize 24x24 -colorspace sRGB \
+			${name}_small.png
+		`
+	})
+}
+
 function genTexture(img, gradients) {
 	let name = img.name.split('.').slice(0, -1).join('.')
 
 	let pGradientFill = genGradientFill(img, gradients[0])
 	let pHighlight = genHighlight(img, gradients[1])
 	let pBorders = genBorders(img)
+	let pMap = genMap(img)
 
 	return Promise.all([pGradientFill, pHighlight]).then(res => {
 		return genCompositeHighlights(img, res.flat())
 	}).then(composited => {
 		return pBorders.then(border => {
-			return genDefault(composited[0], border[0])
+			return Promise.all([
+				genDefault(composited[0], border[0]),
+				genSmall(composited[0], border[0]),
+				pMap
+			]).then(res => {
+				return res.map(data => data.outputFiles).flat()
+			})
 		})
 	})
 }
