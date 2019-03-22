@@ -75,19 +75,21 @@ function genDefault(img, border) {
 			${img.name} -compose Over -composite \
 			${border.name} -compose Dst_Over -composite \
 			-colorspace RGB -resize 128x128 -colorspace sRGB \
-			${name}_default.png
+			-define dds:compression=none \
+			${name}_default.dds
 		`
 	})
 }
 
 function genMap(img) {
-	let name = img.name.split('.').slice(0, -1).join('.').split('_').slice(0, -1).join('_')
+	let name = img.name.split('.').slice(0, -1).join('.')
 	return Magick.execute({
 		inputFiles: [img],
 		commands: `
 			convert ${img.name} -alpha copy \
 			-resize 256x256 \
-			${name}_map.png
+			-define dds:compression=dxt5 -define dds:cluster-fit=true -define dds:weight-by-alpha=true \
+			${name}_map.dds
 		`
 	})
 }
@@ -102,8 +104,24 @@ function genSmall(img, border) {
 			${img.name} -compose Over -composite \
 			${border.name} -compose Dst_Over -composite \
 			-colorspace RGB -resize 24x24 -colorspace sRGB \
-			${name}_small.png
+			-define dds:compression=none \
+			${name}_small.dds
 		`
+	})
+}
+
+function toPNG(img) {
+	let name = img.name.split('.').slice(0, -1).join('.')
+	let pInputs = Magick.asInputFile(img, img.name)
+	return pInputs.then(input => {
+		return Magick.execute({
+			inputFiles: [input],
+			commands: `
+				convert ${input.name} ${name}.png
+			`
+		}).then(res => {
+			return res.outputFiles[0]
+		})
 	})
 }
 
@@ -153,5 +171,6 @@ function processImages(imgs) {
 }
 
 export default {
-	genTextures: processImages
+	genTextures: processImages,
+	toPNG: toPNG
 }

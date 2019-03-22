@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', e => {
 			Display.clear()
 			jobs.forEach(job => {
 				job.then(res => {
-					res.forEach(image => {
-						Display.append(image.blob)
+					Promise.all(res.map(dds => Textures.toPNG(dds))).then(res => {
+						res.forEach(png => Display.append(png.blob))
 					})
 				})
 			})
