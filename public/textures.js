@@ -46,7 +46,7 @@ function genCompositeHighlights(img, gradients) {
 	return Magick.execute({
 		inputFiles: [img, ...gradients],
 		commands: `
-			convert ${name}_fill.png ${name}_highlights.png -compose screen -composite -sigmoidal-contrast 2,50%% -background white ${name}_compisited.png
+			convert ${name}_fill.png ${name}_highlights.png -compose screen -composite -sigmoidal-contrast 2,50%% -background white ${name}_composited.png
 		`
 	}).then(res => {
 		return genInputFiles(res.outputFiles)
