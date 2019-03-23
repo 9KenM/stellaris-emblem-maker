@@ -41,10 +41,25 @@ function loadEnd() {
 	document.getElementById('dropzone').classList.remove('loading')
 }
 
+function showDownloadLink(blob) {
+	let anchor = document.getElementById('download')
+	anchor.href = window.URL.createObjectURL(blob)
+	anchor.target = '_blank'
+	anchor.download = 'emblems.zip'
+	anchor.classList.add('show')
+}
+
+function hideDownloadLink() {
+	let anchor = document.getElementById('download')
+	anchor.classList.remove('show')
+}
+
 export default {
 	clear: emptyContainer,
 	fill: fillContainer,
 	append: append,
 	loadStart: loadStart,
-	loadEnd: loadEnd
+	loadEnd: loadEnd,
+	showDownload: showDownloadLink,
+	hideDownload: hideDownloadLink
 }

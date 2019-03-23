@@ -4,6 +4,8 @@
 body {
 	font-family: 'Open Sans', sans-serif;
 	margin: 0;
+	background-color: #171d17;
+	color: white;
 }
 
 .site-header {
@@ -13,6 +15,7 @@ body {
 	height: 60px;
 	padding: 30px;
 	box-sizing: border-box;
+	background-image: linear-gradient(to bottom, #26352d, #171d17);
 }
 
 .u-hidden {
@@ -21,15 +24,15 @@ body {
 
 .dropzone {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	color: rgba(200,200,200,0.25);
-	border: 3px dashed;
+	color: rgba(71,149,116,0.25);
+	border: 1px dashed rgb(71,149,116);
 	border-radius: 20px;
 	width: calc(100vw - 60px);
 	height: calc(100vh - 90px);
 	transition: background-color 0.25s;
-	font-size: 250px;
 	box-sizing: border-box;
 	padding: 50px;
 	margin: 0 30px 30px 30px;
@@ -38,20 +41,20 @@ body {
 }
 
 .dropzone.is_dragged-over {
-	background-color: rgba(0,0,0,0.1);
-	color: rgba(33,33,33,0.25);
+	background-color: rgba(211,127,31,0.25);
+	border-color: rgb(211,127,31);
 }
 
 .dropzone::after {
-	content: 'drop 512x512 black-and-white images here';
+	content: 'drop 512x512 white-on-black images here';
 	font-size: 2rem;
 	position: absolute;
 	z-index: -1;
-	color: rgba(200,200,200,0.5);
+	color: #e5e6e6;
 }
 
 .dropzone.is_dragged-over::after {
-	color: rgba(33,33,33,0.5);
+	/*color: rgb(71,149,116,1);*/
 }
 
 .dropzone::before {
@@ -73,11 +76,13 @@ body {
 }
 
 .thumbnails {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, 200px);
-	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
 	max-height: 100%;
 	pointer-events: none;	
+	justify-content: center;
+	background-color: rgba(71,149,116,0.25);
+	border: 1px solid rgb(71,149,116);
 }
 
 .thumbnails .image {
@@ -87,4 +92,26 @@ body {
 
 .site-footer {
 	display: none;
+}
+
+.download {
+	display: none;
+	background-color: #1d2b24;
+	color: white;
+	text-decoration: none;
+	height: 40px;
+	padding: 0 20px;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #479574;
+	margin-bottom: 50px;
+}
+
+.download:hover {
+	background-color: #2c2716;
+	border-color: #d37f1f;
+}
+
+.download.show {
+	display: flex;
 }

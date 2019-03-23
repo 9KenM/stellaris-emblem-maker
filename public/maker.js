@@ -28,21 +28,19 @@ document.addEventListener('DOMContentLoaded', e => {
 		Display.loadStart()
 		Textures.genTextures(files).then(jobs => {
 			Display.clear()
+			Display.hideDownload()
 			jobs.forEach(job => {
 				job.then(res => {
-					Promise.all(res.map(dds => Textures.toPNG(dds))).then(res => {
-						res.forEach(png => {
-							if(getFileInfo(png)[1] === 'default') {
-								Display.append(png.blob)
-							}
-						})
+					let defaultDDS = res.find(dds => getFileInfo(dds)[1] === 'default')
+					Textures.toPNG(defaultDDS).then(png => {
+						Display.append(png.blob)
 					})
 				})
 			})
 			Promise.all(jobs).then(res => {
-				Display.loadEnd()
-				Package.zip(res).generateAsync({type: 'base64'}).then(base64 => {
-					window.location = 'data:application/zip;base64,' + base64
+				Package.zip(res).generateAsync({type: 'blob'}).then(blob => {
+					Display.loadEnd()
+					Display.showDownload(blob)
 				})
 			})
 		})

@@ -10,7 +10,7 @@ function zipFile(file, zip) {
 	let type = nameArr.pop()
 	type = type === 'default' ? '' : type + '/'
 	let name = nameArr.join('_')
-	zip.file(type + name + '.' + extension, file.blob)
+	zip.file(type + 'emblem_' + name + '.' + extension, file.blob)
 }
 
 function zipUp(files) {
