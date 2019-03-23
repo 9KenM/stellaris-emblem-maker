@@ -34,11 +34,24 @@ body {
 	padding: 50px;
 	margin: 0 30px 30px 30px;
 	overflow: auto;
+	cursor: pointer;
 }
 
 .dropzone.is_dragged-over {
 	background-color: rgba(0,0,0,0.1);
 	color: rgba(33,33,33,0.25);
+}
+
+.dropzone::after {
+	content: 'drop 512x512 black-and-white images here';
+	font-size: 2rem;
+	position: absolute;
+	z-index: -1;
+	color: rgba(200,200,200,0.5);
+}
+
+.dropzone.is_dragged-over::after {
+	color: rgba(33,33,33,0.5);
 }
 
 .dropzone::before {
@@ -48,6 +61,10 @@ body {
 	font-size: 200px;
 	position: absolute;
 	z-index: -1;
+}
+
+.dropzone.loading::after {
+	content: 'generating dds images';
 }
 
 .dropzone.loading::before {

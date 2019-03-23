@@ -13,6 +13,15 @@ function readFileData(file) {
 	})
 }
 
+function getFileInfo(file) {
+	let nameArr = file.name.split('.')
+	let extension = nameArr.pop()
+	nameArr = nameArr.join('.').split('_')
+	let type = nameArr.pop()
+	let name = nameArr.join('_')
+	return [name, type, extension]
+}
+
 document.addEventListener('DOMContentLoaded', e => {
 	Drop.init()
 	Drop.onDrop(files => {
@@ -22,7 +31,11 @@ document.addEventListener('DOMContentLoaded', e => {
 			jobs.forEach(job => {
 				job.then(res => {
 					Promise.all(res.map(dds => Textures.toPNG(dds))).then(res => {
-						res.forEach(png => Display.append(png.blob))
+						res.forEach(png => {
+							if(getFileInfo(png)[1] === 'default') {
+								Display.append(png.blob)
+							}
+						})
 					})
 				})
 			})
