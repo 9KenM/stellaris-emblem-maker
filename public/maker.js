@@ -1,6 +1,7 @@
 import Drop from './drop.js'
 import Display from './display.js'
 import Textures from './textures.js'
+import Package from './package.js'
 
 function readFileData(file) {
 	return new Promise(resolve => {
@@ -27,6 +28,9 @@ document.addEventListener('DOMContentLoaded', e => {
 			})
 			Promise.all(jobs).then(res => {
 				Display.loadEnd()
+				Package.zip(res).generateAsync({type: 'base64'}).then(base64 => {
+					window.location = 'data:application/zip;base64,' + base64
+				})
 			})
 		})
 	})
