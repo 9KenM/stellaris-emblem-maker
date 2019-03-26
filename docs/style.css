@@ -11,6 +11,13 @@ body {
 	height: 100vh;
 }
 
+.no-select {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 .site-header {
 	font-family: 'Orbitron', sans-serif;
 	display: flex;
@@ -56,10 +63,6 @@ body {
 	position: absolute;
 	z-index: -1;
 	color: #e5e6e6;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }
 
 .dropzone.is_dragged-over::after {
