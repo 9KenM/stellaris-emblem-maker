@@ -56,7 +56,10 @@ body {
 	position: absolute;
 	z-index: -1;
 	color: #e5e6e6;
-	pointer-events: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .dropzone.is_dragged-over::after {
