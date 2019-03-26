@@ -34,11 +34,15 @@ function append(img) {
 }
 
 function loadStart() {
+	document.getElementById('thumbnails').classList.remove('show')
 	document.getElementById('dropzone').classList.add('loading')
+	displayMessage('generating dds images')
 }
 
 function loadEnd() {
+	document.getElementById('thumbnails').classList.add('show')
 	document.getElementById('dropzone').classList.remove('loading')
+	displayMessage('drop 512x512 white-on-black images here')
 }
 
 function showDownloadLink(blob) {
@@ -54,6 +58,10 @@ function hideDownloadLink() {
 	anchor.classList.remove('show')
 }
 
+function displayMessage(msg) {
+	document.getElementById('message').innerHTML = msg
+}
+
 export default {
 	clear: emptyContainer,
 	fill: fillContainer,
@@ -61,5 +69,6 @@ export default {
 	loadStart: loadStart,
 	loadEnd: loadEnd,
 	showDownload: showDownloadLink,
-	hideDownload: hideDownloadLink
+	hideDownload: hideDownloadLink,
+	message: displayMessage
 }

@@ -14,7 +14,9 @@ function genGradients() {
 	return Magick.execute(`
 		convert canvas:#D6CAB6 canvas:#c1a978 canvas:#725506 -append -filter Cubic -resize 512x512! gradient_fill.png
 		convert canvas:#FFFFFF canvas:#E5D9C5 canvas:#CCBCA3 -append -filter Catrom -resize 512x512! gradient_highlight.png
-	`)
+	`).catch(err => {
+		console.error(err)
+	})
 }
 
 function genGradientFill(img, gradient) {
@@ -26,6 +28,8 @@ function genGradientFill(img, gradient) {
 		`
 	}).then(res => {
 		return genInputFiles(res.outputFiles)
+	}).catch(err => {
+		console.error(err)
 	})
 }
 
@@ -38,6 +42,8 @@ function genHighlight(img, gradient) {
 		`
 	}).then(res => {
 		return genInputFiles(res.outputFiles)
+	}).catch(err => {
+		console.error(err)
 	})
 }
 
@@ -50,6 +56,8 @@ function genCompositeHighlights(img, gradients) {
 		`
 	}).then(res => {
 		return genInputFiles(res.outputFiles)
+	}).catch(err => {
+		console.error(err)
 	})
 }
 
@@ -62,6 +70,8 @@ function genBorders(img) {
 		`
 	}).then(res => {
 		return genInputFiles(res.outputFiles)
+	}).catch(err => {
+		console.error(err)
 	})
 }
 
@@ -78,6 +88,8 @@ function genDefault(img, border) {
 			-define dds:compression=none \
 			${name}_default.dds
 		`
+	}).catch(err => {
+		console.error(err)
 	})
 }
 
@@ -91,6 +103,8 @@ function genMap(img) {
 			-define dds:compression=dxt5 -define dds:cluster-fit=true -define dds:weight-by-alpha=true \
 			${name}_map.dds
 		`
+	}).catch(err => {
+		console.error(err)
 	})
 }
 
@@ -107,12 +121,14 @@ function genSmall(img, border) {
 			-define dds:compression=none \
 			${name}_small.dds
 		`
+	}).catch(err => {
+		console.error(err)
 	})
 }
 
 function toPNG(img) {
 	let name = img.name.split('.').slice(0, -1).join('.')
-	let pInputs = Magick.asInputFile(img, img.name)
+	let pInputs = Magick.asInputFile(img, img.name).catch(err => console.error(err))
 	return pInputs.then(input => {
 		return Magick.execute({
 			inputFiles: [input],
@@ -121,6 +137,8 @@ function toPNG(img) {
 			`
 		}).then(res => {
 			return res.outputFiles[0]
+		}).catch(err => {
+			console.error(err)
 		})
 	})
 }
@@ -149,7 +167,7 @@ function genTexture(img, gradients) {
 }
 
 function genInputFiles(files) {
-	return Promise.all(files.map(data => Magick.asInputFile(data, data.name)))
+	return Promise.all(files.map(data => Magick.asInputFile(data, data.name).catch(err => console.error(err))))
 }
 
 function processImages(imgs) {

@@ -6,16 +6,23 @@ body {
 	margin: 0;
 	background-color: #171d17;
 	color: white;
+	display: grid;
+	grid-template-rows: 60px 1fr;
+	height: 100vh;
 }
 
 .site-header {
 	font-family: 'Orbitron', sans-serif;
 	display: flex;
 	align-items: center;
-	height: 60px;
 	padding: 30px;
 	box-sizing: border-box;
 	background-image: linear-gradient(to bottom, #26352d, #171d17);
+	grid-row-start: 1;
+}
+
+.site-header h1 {
+	margin: 0;
 }
 
 .u-hidden {
@@ -30,14 +37,13 @@ body {
 	color: rgba(71,149,116,0.25);
 	border: 1px dashed rgb(71,149,116);
 	border-radius: 20px;
-	width: calc(100vw - 60px);
-	height: calc(100vh - 90px);
 	transition: background-color 0.25s;
 	box-sizing: border-box;
 	padding: 50px;
 	margin: 0 30px 30px 30px;
 	overflow: auto;
 	cursor: pointer;
+	grid-row-start: 2;
 }
 
 .dropzone.is_dragged-over {
@@ -45,8 +51,7 @@ body {
 	border-color: rgb(211,127,31);
 }
 
-.dropzone::after {
-	content: 'drop 512x512 white-on-black images here';
+.message {
 	font-size: 2rem;
 	position: absolute;
 	z-index: -1;
@@ -66,23 +71,26 @@ body {
 	z-index: -1;
 }
 
-.dropzone.loading::after {
-	content: 'generating dds images';
-}
-
 .dropzone.loading::before {
 	content: '\f013';
 	animation: fa-spin 2s infinite linear;
 }
 
 .thumbnails {
-	display: flex;
-	flex-wrap: wrap;
+	display: none;
 	max-height: 100%;
 	pointer-events: none;	
 	justify-content: center;
 	background-color: rgba(71,149,116,0.25);
 	border: 1px solid rgb(71,149,116);
+	grid-template-columns: repeat(auto-fit, minmax(50px,1fr));
+	grid-template-rows: repeat(auto-fit, minmax(50px,1fr));
+	width: 100%;
+	justify-items: center;
+}
+
+.thumbnails.show {
+	display: grid;
 }
 
 .thumbnails .image {

@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', e => {
 			Display.hideDownload()
 			jobs.forEach(job => {
 				job.then(res => {
+					let msg = Display.message(`generated ${getFileInfo(res[0])[0]}.dds`)
 					let defaultDDS = res.find(dds => getFileInfo(dds)[1] === 'default')
 					Textures.toPNG(defaultDDS).then(png => {
 						Display.append(png.blob)
