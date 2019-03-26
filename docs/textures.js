@@ -1,4 +1,4 @@
-import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js'
+import * as Magick from './lib/wasm-imagemagick.esm-es2018.js'
 
 function getInputData(file) {
 	return new Promise(resolve => {
