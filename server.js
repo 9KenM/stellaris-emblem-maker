@@ -2,7 +2,7 @@ const express = require('express')
 
 const app = express()
 const port = 3000
-const root = 'public'
+const root = 'docs'
 
 app.use(express.static(root))
 
