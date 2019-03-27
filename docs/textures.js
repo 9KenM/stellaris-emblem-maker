@@ -1,10 +1,14 @@
 import * as Magick from './lib/wasm-imagemagick.esm-es2018.js'
 
+function replaceSpaces(str) {
+	return str.split(' ').join('_')
+}
+
 function getInputData(file) {
 	return new Promise(resolve => {
 		let reader = new FileReader()
 		reader.onload = (e) => {
-			resolve({name: file.name, content: new Uint8Array(e.target.result)})
+			resolve({name: replaceSpaces(file.name), content: new Uint8Array(e.target.result)})
 		}
 		reader.readAsArrayBuffer(file)
 	})
